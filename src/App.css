@@ -1,0 +1,86 @@
+body {
+  font-family: 'Karla', sans-serif;
+}
+
+.gpa-calculator {
+  border-left: 6px solid red;
+  background-color: lightgrey;
+  display: flex;
+  padding: 20px;
+  flex-wrap: wrap;
+}
+
+.add-button, .delete-button, .grade-selection {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 0px 30px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+.row {
+  margin: 0 auto;
+  height: 2em;
+}
+
+.message{
+  margin-left: 0 auto;
+  padding: 20px;
+}
+
+.entry {
+  border: 2px solid black;
+  margin: 4px 4px;
+  padding: 2px 2px;
+  display: block;
+  text-align: center;
+}
+
+.error{
+  border: 2px solid red;
+}
+
+.delete-button {
+  background-color: red;
+  font-size: 20px;
+  margin: 0 auto;
+}
+
+.single-char {
+  width: 2em;
+  font-size: 16px;
+  text-align: center;
+}
+
+.grade-scale-input{
+  width: 45%;
+}
+
+#graph {
+  margin: 0 auto;
+  display: block;
+  text-align: center;
+}
+
+.line {
+  fill: none;
+  stroke: #ffab00;
+  stroke-width: 3;
+}
+
+.mark {
+  fill: #ffab00;
+  stroke: #fff;
+}
+
+
+hr {
+  display: block;
+  height: 3px;
+  border: 0;
+  border-top: 1px solid #ccc;
+  padding: 0;
+}
