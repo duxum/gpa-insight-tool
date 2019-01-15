@@ -63,12 +63,12 @@ class GradesProcessor extends React.Component {
         prevM = m
       } else {
         if ((prevM && lengthMatched === input.length)) {
-          this.setState({ scalePatternInputError: false, letterGradesValue: newGradeMapping, gradeScalePattern: newScalePattern.join(", ") })
+          this.setState({ scalePatternInputError: false, letterToValue: newGradeMapping, gradeScalePattern: newScalePattern.join(", ") })
           return
         }
       }
     } while (m)
-    this.setState({ scalePatternInputError: true, letterGradesValue: {}, gradeScalePattern: "undefined" })
+    this.setState({ scalePatternInputError: true, letterToValue: {}, gradeScalePattern: "undefined" })
   }
 
   /**
@@ -144,7 +144,7 @@ class GradesProcessor extends React.Component {
   validEntries() {
     let entries = []
     for (let [id, value] of this.state.entriesData) {
-      if (value && !isNaN(value.credit) && value.grade && value.grade !== 'Select Grade') {
+      if (value && !isNaN(value.credit) && value.grade && value.grade !== 'Select Grade' && this.state.letterToValue[value.grade]) {
         entries.push(id)
       }
     }
@@ -172,7 +172,7 @@ class GradesProcessor extends React.Component {
     let validIDs = this.validEntries()
     for (let id of this.state.entriesData.keys()) {
       entries.push(<InputGroup key={id} error={(validIDs.includes(id)) ? false : true}
-        optionValues={Object.keys(this.state.letterToValue)}
+        optionValues={Object.keys(defaultLetterGradesValue)}
         onGradeSelection={(grade) => this.handleGradeSelection(id, grade)}
         onCreditInput={(credit) => this.handleCreditInput(id, credit)}
         onEntryRemoval={() => this.handleEntryRemoval(id)} />)
