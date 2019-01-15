@@ -108,7 +108,6 @@ class GradesProcessor extends React.Component {
    */
   handleCreditInput(id, credit) {
     if (isNaN(credit)) {
-      console.log("The error has occured")
       return
     }
     this.changePropertyWithID('credit', id, +credit)
