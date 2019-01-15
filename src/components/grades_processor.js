@@ -137,27 +137,11 @@ class GradesProcessor extends React.Component {
   }
 
   /**
-   * The erroneous entries are the ones which contain credit value which are not numbers 
-   * or the user has not interacted with those entries. Those entries are not considered when calculatinf the GPA
-   * @return {number|Array} - The ids of the entries which have specific errors
-   */
-  erroneousEntries() {
-    let erroneous = []
-    for (let [id, value] of this.state.entriesData) {
-      if (value && (isNaN(value.credit) || !value.grade || !(value.grade in this.state.letterToValue))) {
-        erroneous.push(id)
-      }
-    }
-    return erroneous
-  }
-
-
-  /**
    * The used entries are the ones which contain credit value which are numbers 
    * or the user has interacted with those entries. Those entries the ones to be considered when calculating the GPA
    * @return {number|Array} - The ids of the entries whose format is expected
    */
-  usedEntries() {
+  validEntries() {
     let entries = []
     for (let [id, value] of this.state.entriesData) {
       if (value && !isNaN(value.credit) && value.grade && value.grade !== 'Select Grade') {
@@ -173,9 +157,9 @@ class GradesProcessor extends React.Component {
    */
   gpaValue() {
     let totalWeighted = 0, totalCreditTaken = 0;
-    let usedIDs = this.usedEntries()
+    let validIDs = this.validEntries()
     for (let [id, value] of this.state.entriesData) {
-      if (usedIDs.includes(id)) {
+      if (validIDs.includes(id)) {
         totalWeighted += value.credit * this.state.letterToValue[value.grade]
         totalCreditTaken += value.credit
       }
@@ -185,9 +169,9 @@ class GradesProcessor extends React.Component {
 
   render() {
     let entries = []
-    let usedIDs = this.usedEntries()
+    let validIDs = this.validEntries()
     for (let id of this.state.entriesData.keys()) {
-      entries.push(<InputGroup key={id} error={(usedIDs.includes(id)) ? false : true}
+      entries.push(<InputGroup key={id} error={(validIDs.includes(id)) ? false : true}
         optionValues={Object.keys(this.state.letterToValue)}
         onGradeSelection={(grade) => this.handleGradeSelection(id, grade)}
         onCreditInput={(credit) => this.handleCreditInput(id, credit)}
@@ -203,7 +187,7 @@ class GradesProcessor extends React.Component {
             <p>Note that the scale pattern is a comma separated list of letter-grade==>value i.e(A+==>3, ..., Z-==>6.4). The Default is {defaultGradeScalePattern} </p>
             <p>The current grade scale is {this.state.gradeScalePattern}</p>
           </div>
-          <h3 style={{ textAlign: 'center' }}>The calculated GPA is <em style={{ color: 'green' }}>{gpaValue.toFixed(3)}</em>, without considering <em style={{ color: 'green' }}>{this.state.entriesData.size - usedIDs.length}</em> uninteracted with/erronous entries.</h3>
+          <h3 style={{ textAlign: 'center' }}>The calculated GPA is <em style={{ color: 'green' }}>{gpaValue.toFixed(3)}</em>, without considering <em style={{ color: 'green' }}>{this.state.entriesData.size - validIDs.length}</em> uninteracted with/erronous entries.</h3>
           <h3><b>Select the grade and input the number of credits for each class</b></h3>
         </div>
         <div className="gpa-calculator">
