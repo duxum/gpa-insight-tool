@@ -71,7 +71,6 @@ function updateGraph(entries) {
     //Update the axis properties
     xScale.domain(entries.map((e) => e.semester))
     let maximumGPAValues = max(entries, (e) => e.grade) || 0
-    console.log("The maximum from the function is", maximumGPAValues, "Using ", defaultMaximumGPA > maximumGPAValues ? defaultMaximumGPA : maximumGPAValues, "The entries", entries)
     yScale.domain([0, defaultMaximumGPA > maximumGPAValues ? defaultMaximumGPA : maximumGPAValues])
 
     //Clean up the graph before removing elements
@@ -140,7 +139,6 @@ class Graph extends React.Component {
         return entries
     }
     updateGraph() {
-        // console.log("The array of entries will be", this.getEntriesArray())
         updateGraph(this.getEntriesArray()) //passing to global function which update the graph
     }
 
